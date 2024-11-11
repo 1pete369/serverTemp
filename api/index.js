@@ -1,6 +1,6 @@
 const express = require('express');
 const mongoose = require('mongoose');
-const cors = require('cors');
+// const cors = require('cors');
 require('dotenv').config();
 
 const users_router = require('../routes/users');
@@ -9,17 +9,12 @@ const day_router = require('../routes/days');
 
 const app = express();
 
-app.use(cors({ origin: 'https://empirev2.vercel.app'  , credentials : true }));
-
-
-// Custom headers middleware
 app.use((req, res, next) => {
-    res.setHeader('Access-Control-Allow-Origin', 'https://empirev2.vercel.app');
-    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
-    res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization, X-Requested-With');
-    res.setHeader('Access-Control-Allow-Credentials', 'true'); // Allow credentials (e.g., cookies)
+    res.setHeader('Access-Control-Allow-Origin', 'https://empirev2.vercel.app'); // Replace with your actual origin
+    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE'); // Allow specific HTTP methods
+    res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization'); // Allow specific headers
     next();
-});
+  });
 
 app.use(express.json());
 
