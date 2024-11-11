@@ -1,6 +1,6 @@
 const express = require('express');
 const mongoose = require('mongoose');
-// const cors = require('cors');
+const cors = require('cors');
 require('dotenv').config();
 
 const users_router = require('../routes/users');
@@ -9,28 +9,37 @@ const day_router = require('../routes/days');
 
 const app = express();
 
+// CORS Configuration
+const corsOptions = {
+  origin: 'https://empirev2.vercel.app',  // Allow requests from this origin
+  credentials: true,  // Allow cookies to be sent
+  methods: ['GET', 'POST', 'PATCH', 'DELETE', 'OPTIONS', 'PUT'],
+  allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With']
+};
+
+// Use CORS middleware globally for all routes
+app.use(cors(corsOptions));
+
+// Alternatively, explicitly set headers if needed for specific routes
 app.use((req, res, next) => {
-    res.setHeader('Access-Control-Allow-Origin', 'https://empirev2.vercel.app'); // Replace with your actual origin
-    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE'); // Allow specific HTTP methods
-    res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization'); // Allow specific headers
-    next();
-  });
+  res.setHeader('Access-Control-Allow-Origin', 'https://empirev2.vercel.app'); // Allow requests from your frontend URL
+  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');  // Allow these methods
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization, X-Requested-With');  // Allow these headers
+  next();
+});
 
 app.use(express.json());
 
-mongoose.connect(process.env.DB_URL, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-});
+mongoose.connect(process.env.DB_URL);
 
 const db = mongoose.connection;
 
 app.get('/', (req, res) => {
-    res.json({ "message" : "it's home bro" });
+  res.json({ "message": "it home bro" });
 });
 
 db.on('open', () => {
-    console.log("Connected to MongoDB");
+  console.log("Connected to MongoDB");
 });
 
 app.use('/users', users_router);
