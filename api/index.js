@@ -11,6 +11,13 @@ const app= express()
 
 app.use(cors())
 
+app.use(cors({
+    origin: 'http://localhost:3000', // allows only this origin
+    methods: ['GET', 'POST', 'PUT', 'DELETE'], // specify allowed methods
+    credentials: true // if you need to send cookies or headers like Authorization
+}));
+  
+
 app.use(express.json())
 
 mongoose.connect(process.env.DB_URL)
