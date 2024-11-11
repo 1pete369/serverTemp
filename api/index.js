@@ -14,21 +14,18 @@ const corsOptions = {
   origin: 'https://empirev2.vercel.app',  // Allow requests from this origin
   credentials: true,  // Allow cookies to be sent
   methods: ['GET', 'POST', 'PATCH', 'DELETE', 'OPTIONS', 'PUT'],
-  allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With']
+  allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With'],
+  preflightContinue: false, // Make sure preflight request doesn't hang
+  optionsSuccessStatus: 204  // Handle preflight requests properly (some browsers expect 204)
 };
 
 // Use CORS middleware globally for all routes
 app.use(cors(corsOptions));
 
-// Explicitly set CORS headers for preflight (OPTIONS) requests
-app.use((req, res, next) => {
-  res.setHeader('Access-Control-Allow-Origin', 'https://empirev2.vercel.app'); // Allow requests from your frontend URL
-  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, PATCH, OPTIONS');  // Allow these methods
-  res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization, X-Requested-With');  // Allow these headers
-  res.setHeader('Access-Control-Allow-Credentials', 'true');  // Allow credentials (cookies, etc.)
-  next();
-});
+// Handle OPTIONS requests explicitly (for preflight checks)
+app.options('*', cors(corsOptions));  // Allow all routes to handle OPTIONS preflight requests
 
+// Express body parser middleware
 app.use(express.json());
 
 mongoose.connect(process.env.DB_URL);
