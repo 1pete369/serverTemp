@@ -9,16 +9,8 @@ const day_router = require('../routes/days');
 
 const app = express();
 
-const corsOptions = {
-    origin: 'https://empirev2.vercel.app', // Your frontend URL
-    credentials: true,
-    methods: ['GET', 'POST', 'PATCH', 'DELETE', 'OPTIONS', 'PUT'],
-    allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With'],
-};
+app.use(cors({ origin: 'https://empirev2.vercel.app'  , credentials : true }));
 
-// Apply CORS options and handle preflight requests
-app.use(cors(corsOptions));
-app.options('*', cors(corsOptions));
 
 // Custom headers middleware
 app.use((req, res, next) => {
