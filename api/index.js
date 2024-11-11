@@ -11,13 +11,16 @@ const app= express()
 
 // app.use(cors())
 
+
 const corsOptions = {
-    origin: 'https://empirev2.vercel.app', // your front-end origin
-    methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH'], // include PATCH here
-    credentials: true
+    origin: 'https://empirev2.vercel.app', // specify the front-end origin
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH'], // include all methods you plan to use
+    allowedHeaders: ['Content-Type', 'Authorization'], // include any custom headers if necessary
+    credentials: true // if you need to include cookies or authorization headers
 };
 
 app.use(cors(corsOptions));
+
 
 
 app.use(express.json())
