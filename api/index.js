@@ -9,7 +9,7 @@ const day_router = require('../routes/days')
 
 const app= express()
 
-app.use(cors())
+// app.use(cors())
 
 app.use(cors({
     origin: 'http://localhost:3000', // allows only this origin
