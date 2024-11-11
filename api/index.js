@@ -20,11 +20,12 @@ const corsOptions = {
 // Use CORS middleware globally for all routes
 app.use(cors(corsOptions));
 
-// Alternatively, explicitly set headers if needed for specific routes
+// Explicitly set CORS headers for preflight (OPTIONS) requests
 app.use((req, res, next) => {
   res.setHeader('Access-Control-Allow-Origin', 'https://empirev2.vercel.app'); // Allow requests from your frontend URL
-  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, PATCH');  // Allow these methods
+  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, PATCH, OPTIONS');  // Allow these methods
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization, X-Requested-With');  // Allow these headers
+  res.setHeader('Access-Control-Allow-Credentials', 'true');  // Allow credentials (cookies, etc.)
   next();
 });
 
