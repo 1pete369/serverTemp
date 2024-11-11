@@ -3,9 +3,9 @@ const mongoose = require('mongoose')
 const cors = require('cors')
 require('dotenv').config()
 
-// const users_router = require('./routes/users')
-// const todo_router = require('./routes/todos')
-// const day_router = require('./routes/days')
+const users_router = require('../routes/users')
+const todo_router = require('../routes/todos')
+const day_router = require('../routes/days')
 
 const app= express()
 
@@ -29,9 +29,9 @@ db.on('open',()=>{
     console.log("Connected to Mongodb")
 })
 
-// app.use('/users',users_router)
-// app.use('/todos',todo_router)
-// app.use('/days',day_router)
+app.use('/users',users_router)
+app.use('/todos',todo_router)
+app.use('/days',day_router)
 
 module.exports = app
 
