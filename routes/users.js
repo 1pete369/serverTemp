@@ -47,25 +47,66 @@ router.get("/fetch-user/:id", async (req, res) => {
 })
 
 router.patch("/update-profile/:id", async (req, res) => {
-  const uid = req.params.id
-  const { username, name } = req.body.updateFields
-  console.log(username, name)
-  const updateFields = {}
-  if (username) updateFields.username = username
-  if (name) updateFields.displayName = name
+  const uid = req.params.id;
+
+  console.log("update fields called");
+  console.log("Request Body:", req.body);
+
+  // Access username and name from req.body.updateFields
+  const { username, name } = req.body.updateFields || {};
+
+  const updateFieldsObj = {};
+  if (username) updateFieldsObj.username = username;
+  if (name) updateFieldsObj.displayName = name;
 
   try {
-    // const userObject = await user.find({uid})
     const userObject = await user.findOneAndUpdate(
       { uid },
-      { $set: updateFields },
+      { $set: updateFieldsObj },
       { new: true }
-    )
-    res.json({ userObject, flag: true })
+    );
+
+    if (!userObject) {
+      return res.status(404).json({ message: "User not found", flag: false });
+    }
+
+    res.json({ userObject, flag: true });
   } catch (err) {
-    res.json({ message: err, flag: false })
+    console.error("Error updating profile:", err.message);
+    res.status(500).json({ message: "An error occurred while updating the profile", flag: false });
   }
-})
+});
+
+
+
+
+  // if (!updateFields) {
+  //   return res.status(400).json({ message: "updateFields is required", flag: false });
+  // }
+
+  // const { username, name } = updateFields; // Destructure username and name
+  // console.log(username, name);
+
+  // // Prepare the updateFields object for the update query
+  // const updateFieldsObj = {};
+  // if (username) updateFieldsObj.username = username;
+  // if (name) updateFieldsObj.displayName = name;
+
+  // try {
+  //   // Update the user in the database
+  //   const userObject = await user.findOneAndUpdate(
+  //     { uid },
+  //     { $set: updateFieldsObj },
+  //     { new: true }
+  //   );
+    
+  //   // Respond with the updated user object
+  //   res.json({ userObject, flag: true });
+  // } catch (err) {
+  //   // Handle any errors
+  //   res.json({ message: err.message, flag: false });
+  // }
+
 
 router.get("/check-username/:id", async (req, res) => {
   const username = req.params.id
