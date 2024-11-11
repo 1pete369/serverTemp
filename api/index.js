@@ -23,7 +23,7 @@ app.use(cors(corsOptions));
 // Alternatively, explicitly set headers if needed for specific routes
 app.use((req, res, next) => {
   res.setHeader('Access-Control-Allow-Origin', 'https://empirev2.vercel.app'); // Allow requests from your frontend URL
-  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');  // Allow these methods
+  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, PATCH');  // Allow these methods
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization, X-Requested-With');  // Allow these headers
   next();
 });
