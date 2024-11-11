@@ -17,9 +17,9 @@ mongoose.connect(process.env.DB_URL)
 
 const db= mongoose.connection
 
-app.listen(process.env.PORT_NUM,()=>{
-    console.log("server started on port ",process.env.PORT_NUM)
-})
+// app.listen(process.env.PORT_NUM,()=>{
+//     console.log("server started on port ",process.env.PORT_NUM)
+// })
 
 app.get('/',(req,res)=>{
     res.json({ "message" : "it home bro"})
