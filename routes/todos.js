@@ -62,9 +62,9 @@ router.delete('/delete-todo/:id', async (req, res) => {
         const response = await todo.findOneAndDelete({ id });
 
         if (response) {
-            res.json({ message: "Todo deleted successfully", deleted: true });
+            res.json({ message: "Todo deleted successfully",response, deleted: true });
         } else {
-            res.json({ message: "Todo not found", deleted: false });
+            res.json({ message: "Todo not found",response, deleted: false });
         }
     } catch (err) {
         res.json({ Error: err });
