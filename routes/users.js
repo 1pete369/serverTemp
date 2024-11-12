@@ -133,5 +133,18 @@ router.get('/get-full-user/:id',async(req,res)=>{
     }
 })
 
+router.get('/get-all-users',async(req,res)=>{
+  try{
+    const allUsers = await user.find().populate({
+      path : "customData.days",
+      populate : {
+        path : "todos"
+      }
+    }).exec()
+    res.json({ message : "All users fetched" , allUsers })
+  }catch(err){
+    res.json({Error : err })
+  }
+})
 
 module.exports = router
