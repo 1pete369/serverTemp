@@ -49,9 +49,9 @@ router.post('/create-day',async(req,res)=>{
 })
 
 
-router.post("/push-day-id/:id", async (req, res) => {
+router.post("/push-todo-id/:id", async (req, res) => {
 
-    console.log("Push day called in Days")
+    console.log("Push todo called in Days")
 
   const userId = req.params.id
   const { todoId , dayDate } = req.body
@@ -70,5 +70,22 @@ router.post("/push-day-id/:id", async (req, res) => {
   }
 })
 
+router.patch("/pull-todo-id/:id",async(req,res)=>{
+    console.log("Pull todo id called")
+    const uid = req.params.id
+    const { deleteTodoObjectId , dayDate }= req.body
+
+    const todoObjectId = new mongoose.Types.ObjectId(deleteTodoObjectId)
+
+    try{
+        const deletedTodoId = await day.findOneAndUpdate(
+            { uid , date : dayDate },
+        {$pull : { "todos" : todoObjectId }},{new : true })
+
+        res.json({ message : "Todo id deleted successfully" , deletedTodoId })
+    }catch(err){
+        res.json({ Error : err })
+    }
+})
 
 module.exports = router

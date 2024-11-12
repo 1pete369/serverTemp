@@ -77,37 +77,6 @@ router.patch("/update-profile/:id", async (req, res) => {
   }
 });
 
-
-
-
-  // if (!updateFields) {
-  //   return res.status(400).json({ message: "updateFields is required", flag: false });
-  // }
-
-  // const { username, name } = updateFields; // Destructure username and name
-  // console.log(username, name);
-
-  // // Prepare the updateFields object for the update query
-  // const updateFieldsObj = {};
-  // if (username) updateFieldsObj.username = username;
-  // if (name) updateFieldsObj.displayName = name;
-
-  // try {
-  //   // Update the user in the database
-  //   const userObject = await user.findOneAndUpdate(
-  //     { uid },
-  //     { $set: updateFieldsObj },
-  //     { new: true }
-  //   );
-    
-  //   // Respond with the updated user object
-  //   res.json({ userObject, flag: true });
-  // } catch (err) {
-  //   // Handle any errors
-  //   res.json({ message: err.message, flag: false });
-  // }
-
-
 router.get("/check-username/:id", async (req, res) => {
   const username = req.params.id
   console.log("Check username called", username)
