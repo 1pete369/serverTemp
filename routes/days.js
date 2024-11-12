@@ -54,13 +54,13 @@ router.post("/push-day-id/:id", async (req, res) => {
     console.log("Push day called in Days")
 
   const userId = req.params.id
-  const { todoId } = req.body
+  const { todoId , dayDate } = req.body
 
   const todoObjectId = new mongoose.Types.ObjectId(todoId)
 
   try {
     const updatedTodo = await day.findOneAndUpdate(
-      { uid: userId },
+      { uid: userId , date : dayDate },
       { $push: { "todos": todoObjectId } },
       { new : true }
     )
