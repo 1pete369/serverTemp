@@ -56,13 +56,13 @@ router.patch("/update-profile/:id", async (req, res) => {
   const { username, name } = req.body.updateFields || {};
 
   const updateFieldsObj = {};
-  if (username) updateFieldsObj.username = username;
-  if (name) updateFieldsObj.displayName = name;
+  if (username) updateFieldsObj["personalInfo.username"] = username;
+  if (name) updateFieldsObj["personalInfo.displayName"] = name;
 
   try {
     const userObject = await user.findOneAndUpdate(
       { uid },
-      { $set: updateFieldsObj },
+      { $set:  updateFieldsObj  },
       { new: true }
     );
 
@@ -83,7 +83,7 @@ router.get("/check-username/:id", async (req, res) => {
   try {
     const users = await user.find()
     console.log(users)
-    const isAlreadyExist = users.filter((user) => user.username === username)
+    const isAlreadyExist = users.filter((user) => user.personalInfo.username === username)
     console.log(isAlreadyExist)
     if (isAlreadyExist.length > 0) {
       res.json({ message: "userName already existed", exist: true })
